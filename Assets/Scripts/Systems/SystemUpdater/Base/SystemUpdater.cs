@@ -183,7 +183,7 @@ namespace MergeCase.Systems.Updater
 
         public bool TryAddGameSystemByTypeImmediately<T1>(bool autoInitialize = true) where T1 : T
         {
-            T gameSystem = Activator.CreateInstance(typeof(T)) as T;
+            T gameSystem = Activator.CreateInstance(typeof(T1)) as T;
             return TryAddGameSystemImmediately(gameSystem, autoInitialize);
         }
 
@@ -216,9 +216,9 @@ namespace MergeCase.Systems.Updater
             return TryAddGameSystem(gameSystem, autoInitialize);
         }
 
-        public bool TryGetGameSystemByType<T1>(out T gameSystem) where T1 : T
+        public bool TryGetGameSystem<T1>(out T1 gameSystem) where T1 : T
         {
-            T foundGameSystem = _updateGameSystems.Where(x => x.GetType() == typeof(T)).FirstOrDefault();
+            T foundGameSystem = _updateGameSystems.Where(x => x.GetType() == typeof(T1)).FirstOrDefault();
 
             if (foundGameSystem == null)
             {
@@ -232,11 +232,11 @@ namespace MergeCase.Systems.Updater
                 return false;
             }
 
-            gameSystem = foundGameSystem as T;
+            gameSystem = foundGameSystem as T1;
             return true;
         }
 
-        public bool TryGetGameSystemByTypeWithoutConstraint<T1>(out T1 gameSystem) where T1 : class
+        public bool TryGetGameSystemByType<T1>(out T1 gameSystem) where T1 : class
         {
             T foundGameSystem = _updateGameSystems.Where(x => typeof(T).IsAssignableFrom(x.GetType())).FirstOrDefault();
 

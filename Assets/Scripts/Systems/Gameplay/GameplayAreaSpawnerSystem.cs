@@ -15,8 +15,19 @@ namespace MergeCase.Systems.Gameplay
 #endif
         GameplayAreaConfigs _gameplayAreaConfigs;
 
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.ShowInInspector]
+#endif
+        GameplayAreaSystem _gameplayAreaSystem;
+
         public bool TryInitialize(SystemUpdateContext<GameplaySystemBase> data)
         {
+            if (!data.SystemUpdater.TryGetGameSystem(out _gameplayAreaSystem))
+            {
+                UnityLogger.LogErrorWithTag($"{GetType()} could not find {typeof(GameplayAreaSystem)}! Cannot initialize!");
+                return false;
+            }
+
             if (!data.DataCollection.TryGet(out ConfigProvider configProvider))
             {
                 UnityLogger.LogErrorWithTag($"{GetType()} could not find {typeof(ConfigProvider)}! Cannot initialize!");
@@ -25,7 +36,7 @@ namespace MergeCase.Systems.Gameplay
 
             if (!configProvider.TryGet(out _gameplayAreaConfigs))
             {
-                UnityLogger.LogErrorWithTag($"{GetType()} could not find {_gameplayAreaConfigs.GetType()} as config! Cannot initialize!");
+                UnityLogger.LogErrorWithTag($"{GetType()} could not find {typeof(GameplayAreaConfigs)} as config! Cannot initialize!");
                 return false;
             }
 
