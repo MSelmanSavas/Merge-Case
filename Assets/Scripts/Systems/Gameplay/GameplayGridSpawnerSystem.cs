@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace MergeCase.Systems.Gameplay
 {
-    public class GameplayAreaSpawnerSystem : GameplaySystemBase, IInitializable<SystemUpdateContext<GameplaySystemBase>>
+    public class GameplayGridSpawnerSystem : GameplaySystemBase, IInitializable<SystemUpdateContext<GameplaySystemBase>>
     {
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.ShowInInspector]
@@ -18,13 +18,13 @@ namespace MergeCase.Systems.Gameplay
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.ShowInInspector]
 #endif
-        GameplayAreaSystem _gameplayAreaSystem;
+        GameplayGridSystem _gameplayAreaSystem;
 
         public bool TryInitialize(SystemUpdateContext<GameplaySystemBase> data)
         {
             if (!data.SystemUpdater.TryGetGameSystem(out _gameplayAreaSystem))
             {
-                UnityLogger.LogErrorWithTag($"{GetType()} could not find {typeof(GameplayAreaSystem)}! Cannot initialize!");
+                UnityLogger.LogErrorWithTag($"{GetType()} could not find {typeof(GameplayGridSystem)}! Cannot initialize!");
                 return false;
             }
 
