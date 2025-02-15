@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MergeCase.Systems.Updater
 {
-    public class SystemUpdateContextDataProvider : IDataProvider
+    public class SystemUpdateContextDataCollection : IDataCollection
     {
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.ShowInInspector]
@@ -20,6 +20,17 @@ namespace MergeCase.Systems.Updater
             }
 
             _datas.Add(typeof(T), data);
+            return true;
+        }
+
+        public bool TryRemove<T>(T data) where T : class
+        {
+            if (!_datas.ContainsKey(typeof(T)))
+            {
+                return false;
+            }
+
+            _datas.Remove(typeof(T));
             return true;
         }
 
@@ -44,17 +55,6 @@ namespace MergeCase.Systems.Updater
             }
 
             value = foundData as T;
-            return true;
-        }
-
-        public bool TryRemove<T>(T data) where T : class
-        {
-            if (!_datas.ContainsKey(typeof(T)))
-            {
-                return false;
-            }
-
-            _datas.Remove(typeof(T));
             return true;
         }
     }

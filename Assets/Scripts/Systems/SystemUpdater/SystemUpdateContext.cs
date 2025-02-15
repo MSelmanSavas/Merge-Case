@@ -8,12 +8,19 @@ namespace MergeCase.Systems.Updater
 {
     public class SystemUpdateContext<T> where T : SystemBase
     {
-        public IDataProvider DataProvider { get; private set; }
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.ShowInInspector]
+#endif
+        public IDataCollection DataCollection { get; private set; }
+
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.ShowInInspector]
+#endif
         public SystemUpdater<T> SystemUpdater { get; private set; }
 
-        public SystemUpdateContext(IDataProvider dataProvider, SystemUpdater<T> systemUpdater)
+        public SystemUpdateContext(IDataCollection dataCollection, SystemUpdater<T> systemUpdater)
         {
-            DataProvider = dataProvider;
+            DataCollection = dataCollection;
             SystemUpdater = systemUpdater;
         }
     }

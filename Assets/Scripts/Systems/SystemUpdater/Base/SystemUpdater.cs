@@ -10,22 +10,22 @@ namespace MergeCase.Systems.Updater
     public class SystemUpdater<T> : IInitializable, IUpdateable, ILateUpdateable where T : SystemBase
     {
 #if ODIN_INSPECTOR
-            [Sirenix.OdinInspector.ShowInInspector]
+        [Sirenix.OdinInspector.ShowInInspector]
 #endif
         public SystemUpdateContext<T> UpdateContext { get; private set; }
 
 #if ODIN_INSPECTOR
-    [Sirenix.OdinInspector.ShowInInspector]
+        [Sirenix.OdinInspector.ShowInInspector]
 #endif
         public bool IsInitialized { get; private set; }
 
 #if ODIN_INSPECTOR
-    [Sirenix.OdinInspector.ShowInInspector]
+        [Sirenix.OdinInspector.ShowInInspector]
 #endif
         List<T> _updateGameSystems = new();
 
 #if ODIN_INSPECTOR
-    [Sirenix.OdinInspector.ShowInInspector]
+        [Sirenix.OdinInspector.ShowInInspector]
 #endif
         List<T> _lateUpdateGameSystems = new();
 
@@ -37,7 +37,7 @@ namespace MergeCase.Systems.Updater
 
         public SystemUpdater()
         {
-            UpdateContext = new(new SystemUpdateContextDataProvider(), this);
+            UpdateContext = new(new SystemUpdateContextDataCollection(), this);
         }
 
         public bool TryInitialize()

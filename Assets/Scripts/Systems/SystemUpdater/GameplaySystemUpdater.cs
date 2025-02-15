@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class GameplaySystemUpdater : MonoBehaviour
 {
+#if ODIN_INSPECTOR
+    [Sirenix.OdinInspector.ShowInInspector]
+#endif
     public SystemUpdater<GameplaySystemBase> SystemUpdater { get; private set; }
 
     void Awake()
