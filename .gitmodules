@@ -1,0 +1,15 @@
+[submodule "Assets/Submodules/UsefulExtensions"]
+	path = Assets/Submodules/UsefulExtensions
+	url = https://github.com/MSelmanSavas/UsefulExtensions
+[submodule "Assets/Submodule/UsefulDataTypes"]
+	path = Assets/Submodule/UsefulDataTypes
+	url = https://github.com/MSelmanSavas/UsefulDataTypes
+[submodule "Assets/Submodules/UsefulHelpers"]
+	path = Assets/Submodules/UsefulHelpers
+	url = https://github.com/MSelmanSavas/UsefulHelpers
+[submodule "Assets/Submodules/UsefulDataTypes"]
+	path = Assets/Submodules/UsefulDataTypes
+	url = https://github.com/MSelmanSavas/UsefulDataTypes
+[submodule "Assets/Submodules/Logger"]
+	path = Assets/Submodules/Logger
+	url = https://github.com/MSelmanSavas/Logger
