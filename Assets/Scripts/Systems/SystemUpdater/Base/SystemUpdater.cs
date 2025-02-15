@@ -2,16 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using MergeCase.General.Interfaces;
 using UnityEngine;
 
-namespace MergeCase.System
+namespace MergeCase.Systems.Updater
 {
     public class SystemUpdater<T> : IInitializable, IUpdateable, ILateUpdateable where T : SystemBase
     {
-        // #if ODIN_INSPECTOR
-        //     [Sirenix.OdinInspector.ShowInInspector]
-        // #endif
-        //         public RuntimeGameSystemContext RuntimeGameSystemContext { get; private set; }
+#if ODIN_INSPECTOR
+            [Sirenix.OdinInspector.ShowInInspector]
+#endif
+        public SystemUpdateContext<T> UpdateContext { get; private set; }
 
 #if ODIN_INSPECTOR
     [Sirenix.OdinInspector.ShowInInspector]
@@ -34,11 +35,13 @@ namespace MergeCase.System
         List<T> _updateSystemsToBeRemoved = new();
         List<T> _lateUpdateSystemsToBeRemoved = new();
 
-
+        public SystemUpdater()
+        {
+            UpdateContext = new(new SystemUpdateContextDataProvider(), this);
+        }
 
         public bool TryInitialize()
         {
-            //RuntimeGameSystemContext = new RuntimeGameSystemContext();
             IsInitialized = InitializeSystems();
             return true;
         }
@@ -52,7 +55,15 @@ namespace MergeCase.System
         {
             foreach (var system in _updateGameSystems)
             {
-                if (system is IInitializable initializable)
+                if (system is IInitializable<SystemUpdateContext<T>> initializableWithContext)
+                {
+                    if (!initializableWithContext.TryInitialize(UpdateContext))
+                    {
+                        UnityLogger.LogErrorWithTag($"Error while trying to initialize system : {system}! Cannot continue initializing update game systems!");
+                        return false;
+                    }
+                }
+                else if (system is IInitializable initializable)
                 {
                     if (!initializable.TryInitialize())
                     {
@@ -64,11 +75,19 @@ namespace MergeCase.System
 
             foreach (var system in _lateUpdateGameSystems)
             {
-                if (system is IInitializable initializable)
+                if (system is IInitializable<SystemUpdateContext<T>> initializableWithContext)
+                {
+                    if (!initializableWithContext.TryInitialize(UpdateContext))
+                    {
+                        UnityLogger.LogErrorWithTag($"Error while trying to initialize late update system : {system}! Cannot continue initializing late update game systems!");
+                        return false;
+                    }
+                }
+                else if (system is IInitializable initializable)
                 {
                     if (!initializable.TryInitialize())
                     {
-                        UnityLogger.LogErrorWithTag($"Error while trying to initialize late update system : {system}! Cannot continue initializing late update game systems!");
+                        UnityLogger.LogErrorWithTag($"Error while trying to initialize system : {system}! Cannot continue initializing update game systems!");
                         return false;
                     }
                 }
@@ -86,7 +105,15 @@ namespace MergeCase.System
         {
             foreach (var system in _updateGameSystems)
             {
-                if (system is IInitializable initializable)
+                if (system is IInitializable<SystemUpdateContext<T>> initializableWithContext)
+                {
+                    if (initializableWithContext.TryDeInitialize(UpdateContext))
+                    {
+                        UnityLogger.LogErrorWithTag($"Error while trying to deinitialize system : {system}! Cannot continue deinitializing update game systems!");
+                        return false;
+                    }
+                }
+                else if (system is IInitializable initializable)
                 {
                     if (initializable.TryDeInitialize())
                     {
@@ -101,11 +128,19 @@ namespace MergeCase.System
 
             foreach (var system in _lateUpdateGameSystems)
             {
-                if (system is IInitializable initializable)
+                if (system is IInitializable<SystemUpdateContext<T>> initializableWithContext)
                 {
-                    if (!initializable.TryDeInitialize())
+                    if (!initializableWithContext.TryDeInitialize(UpdateContext))
                     {
                         UnityLogger.LogErrorWithTag($"Error while trying to deinitialize late update system : {system}! Cannot continue deinitializing late update game systems!");
+                        return false;
+                    }
+                }
+                else if (system is IInitializable initializable)
+                {
+                    if (initializable.TryDeInitialize())
+                    {
+                        UnityLogger.LogErrorWithTag($"Error while trying to deinitialize system : {system}! Cannot continue deinitializing update game systems!");
                         return false;
                     }
                 }
@@ -130,7 +165,12 @@ namespace MergeCase.System
 
             if (autoInitialize)
             {
-                if (gameSystem is IInitializable initializable)
+                if (gameSystem is IInitializable<SystemUpdateContext<T>> initializableWithContext)
+                {
+                    if (!initializableWithContext.TryInitialize(UpdateContext))
+                        return false;
+                }
+                else if (gameSystem is IInitializable initializable)
                 {
                     if (!initializable.TryInitialize())
                         return false;
@@ -154,7 +194,12 @@ namespace MergeCase.System
 
             if (autoInitialize)
             {
-                if (gameSystem is IInitializable initializable)
+                if (gameSystem is IInitializable<SystemUpdateContext<T>> initializableWithContext)
+                {
+                    if (!initializableWithContext.TryInitialize(UpdateContext))
+                        return false;
+                }
+                else if (gameSystem is IInitializable initializable)
                 {
                     if (!initializable.TryInitialize())
                         return false;
@@ -252,7 +297,12 @@ namespace MergeCase.System
 
             if (autoInitialize)
             {
-                if (gameSystem is IInitializable initializable)
+                if (gameSystem is IInitializable<SystemUpdateContext<T>> initializableWithContext)
+                {
+                    if (!initializableWithContext.TryInitialize(UpdateContext))
+                        return false;
+                }
+                else if (gameSystem is IInitializable initializable)
                 {
                     if (!initializable.TryInitialize())
                         return false;
@@ -276,7 +326,12 @@ namespace MergeCase.System
 
             if (autoInitialize)
             {
-                if (gameSystem is IInitializable initializable)
+                if (gameSystem is IInitializable<SystemUpdateContext<T>> initializableWithContext)
+                {
+                    if (!initializableWithContext.TryInitialize(UpdateContext))
+                        return false;
+                }
+                else if (gameSystem is IInitializable initializable)
                 {
                     if (!initializable.TryInitialize())
                         return false;
@@ -381,6 +436,13 @@ namespace MergeCase.System
                 if (system.IsMarkedForRemoval)
                     continue;
 
+                if (system is IUpdateable<SystemUpdateContext<T>> updateableWithContext)
+                {
+                    if (!updateableWithContext.TryUpdate(UpdateContext))
+                    {
+                        UnityLogger.LogErrorWithTag($"Error while trying to update system : {system}!");
+                    }
+                }
                 if (system is IUpdateable updateable)
                 {
                     if (!updateable.TryUpdate())
@@ -403,11 +465,18 @@ namespace MergeCase.System
                 if (system.IsMarkedForRemoval)
                     continue;
 
-                if (system is IUpdateable updateable)
+                if (system is ILateUpdateable<SystemUpdateContext<T>> lateUpdateableWithContext)
                 {
-                    if (!updateable.TryUpdate())
+                    if (!lateUpdateableWithContext.TryLateUpdate(UpdateContext))
                     {
-                        UnityLogger.LogErrorWithTag($"Error while trying to update system : {system}!");
+                        UnityLogger.LogErrorWithTag($"Error while trying to LateUpdate system : {system}!");
+                    }
+                }
+                else if (system is ILateUpdateable lateUpdateable)
+                {
+                    if (!lateUpdateable.TryLateUpdate())
+                    {
+                        UnityLogger.LogErrorWithTag($"Error while trying to LateUpdate system : {system}!");
                     }
                 }
             }

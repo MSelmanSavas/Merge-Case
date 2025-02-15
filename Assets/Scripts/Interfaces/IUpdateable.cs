@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IUpdateable
+namespace MergeCase.General.Interfaces
 {
-    public bool TryUpdate();
-}
+    public interface IUpdateable
+    {
+        public bool TryUpdate();
+    }
 
-public interface IUpdateable<T>
-{
-    public bool TryUpdate(T data);
+    public interface IUpdateable<T>
+    {
+        public bool TryUpdate(T data);
+    }
 }
