@@ -29,12 +29,36 @@ namespace MergeCase.Systems.Gameplay
                 return false;
             }
 
+            SpawnAreaFromConfig(_gameplayAreaConfigs);
             return true;
         }
 
         public bool TryDeInitialize(SystemUpdateContext<GameplaySystemBase> data)
         {
             return true;
+        }
+
+        void SpawnAreaFromConfig(GameplayAreaConfigs gameplayAreaConfigs)
+        {
+            var areaPrefab = gameplayAreaConfigs.BasicAreaPrefab;
+            var areaSize = gameplayAreaConfigs.AreaSize;
+            var areaOffset = _gameplayAreaConfigs.AreaOffset;
+            var positionOfset = _gameplayAreaConfigs.PositionOffset;
+
+            Vector2 startPos = positionOfset;
+
+            for (int y = 0; y < areaSize.y; y++)
+            {
+                for (int x = 0; x < areaSize.x; x++)
+                {
+                    GameObject.Instantiate(areaPrefab, startPos, Quaternion.identity);
+
+                    startPos.x += areaOffset.x;
+                }
+
+                startPos.x = positionOfset.x;
+                startPos.y += areaOffset.y;
+            }
         }
     }
 }

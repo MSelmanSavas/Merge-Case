@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2528adae70c95384891b9535a021b07f, type: 3}
   m_Name: DefaultGameplayAreaConfigs
   m_EditorClassIdentifier: 
-  <BasicAreaPrefab>k__BackingField: {fileID: 0}
+  <AreaSize>k__BackingField: {x: 10, y: 10}
+  <AreaOffset>k__BackingField: {x: 1, y: 1}
+  <PositionOffset>k__BackingField: {x: -5, y: -5}
+  <BasicAreaPrefab>k__BackingField: {fileID: 2530118385278956861, guid: 9a2484e665d3aa143945ad2e4c37d939, type: 3}

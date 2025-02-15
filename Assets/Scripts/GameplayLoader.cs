@@ -27,8 +27,8 @@ public class GameplayLoader : MonoBehaviour
         systemUpdater.TryAddGameSystemImmediately(new GameplayAreaSpawnerSystem(), autoInitialize: false);
         systemUpdater.TryAddGameSystemImmediately(new GameplayMergeObjectsSpawnerSystem(), autoInitialize: false);
 
-        gameplaySystemUpdater.SystemUpdater.UpdateContext.DataCollection.TryAdd(_configProvider);
+        systemUpdater.UpdateContext.DataCollection.TryAdd(_configProvider);
 
-        gameplaySystemUpdater.SystemUpdater.TryInitialize();
+        systemUpdater.TryInitialize();
     }
 }

@@ -8,6 +8,15 @@ namespace MergeCase.General.Config.Gameplay
     public class GameplayAreaConfigs : ScriptableObject
     {
         [field: SerializeField]
+        public Vector2Int AreaSize { get; private set; }
+
+        [field: SerializeField]
+        public Vector2 AreaOffset { get; private set; }
+
+        [field: SerializeField]
+        public Vector2 PositionOffset { get; private set; }
+
+        [field: SerializeField]
         public GameObject BasicAreaPrefab { get; private set; }
     }
 }
