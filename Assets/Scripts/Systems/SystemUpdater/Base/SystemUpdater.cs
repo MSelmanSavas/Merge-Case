@@ -238,7 +238,7 @@ namespace MergeCase.Systems.Updater
 
         public bool TryGetGameSystemByType<T1>(out T1 gameSystem) where T1 : class
         {
-            T foundGameSystem = _updateGameSystems.Where(x => typeof(T).IsAssignableFrom(x.GetType())).FirstOrDefault();
+            T foundGameSystem = _updateGameSystems.Where(x => typeof(T1).IsAssignableFrom(x.GetType())).FirstOrDefault();
 
             if (foundGameSystem == null)
             {

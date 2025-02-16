@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MergeCase.Entities;
 using MergeCase.General.Config;
 using MergeCase.General.Config.Gameplay;
 using MergeCase.General.Interfaces;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace MergeCase.Systems.Gameplay
 {
-    public class GameplayGridSpawnerSystem : GameplaySystemBase, IInitializable<SystemUpdateContext<GameplaySystemBase>>
+    public class GameplayGridsSpawnerSystem : GameplaySystemBase, IInitializable<SystemUpdateContext<GameplaySystemBase>>
     {
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.ShowInInspector]
@@ -18,13 +19,13 @@ namespace MergeCase.Systems.Gameplay
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.ShowInInspector]
 #endif
-        GameplayGridSystem _gameplayAreaSystem;
+        IEntityCollection<GridEntityQueryData> _gameplayGridSystem;
 
         public bool TryInitialize(SystemUpdateContext<GameplaySystemBase> data)
         {
-            if (!data.SystemUpdater.TryGetGameSystem(out _gameplayAreaSystem))
+            if (!data.SystemUpdater.TryGetGameSystemByType(out _gameplayGridSystem))
             {
-                UnityLogger.LogErrorWithTag($"{GetType()} could not find {typeof(GameplayGridSystem)}! Cannot initialize!");
+                UnityLogger.LogErrorWithTag($"{GetType()} could not find {typeof(IEntityCollection<GridEntityQueryData>)}! Cannot initialize!");
                 return false;
             }
 
