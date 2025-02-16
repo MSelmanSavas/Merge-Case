@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: DefaultGameplayItemsConfigs
   m_EditorClassIdentifier: 
   <BasicItemPrefab>k__BackingField: {fileID: 3178144767178789519, guid: 3acb5964afb66844f9ae16d6d96cf13b, type: 3}
-  <PositionOffset>k__BackingField: {x: 0, y: 0, z: -0.1}
+  <PositionOffset>k__BackingField: {x: 0, y: 0.3, z: -0.1}
