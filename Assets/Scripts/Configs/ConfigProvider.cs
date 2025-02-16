@@ -51,6 +51,11 @@ namespace MergeCase.General.Config
 #if UNITY_EDITOR
         void OnValidate()
         {
+            if (_configList.Count != _configs.Count)
+            {
+                _configs.Clear();
+            }
+
             bool isAnythingChanged = false;
 
             foreach (var config in _configList)

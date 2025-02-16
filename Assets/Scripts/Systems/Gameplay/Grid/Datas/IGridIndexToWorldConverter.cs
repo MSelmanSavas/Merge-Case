@@ -6,4 +6,9 @@ namespace MergeCase.Systems.Gameplay
     {
         public Vector3 GetWorldPos(Vector2Int gridIndex);
     }
+
+    public interface IGridIndexToWorldConverter<T>
+    {
+        public Vector3 GetWorldPos(Vector2Int gridIndex);
+    }
 }

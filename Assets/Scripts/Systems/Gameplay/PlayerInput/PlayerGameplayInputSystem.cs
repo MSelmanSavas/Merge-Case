@@ -13,7 +13,7 @@ namespace MergeCase.Systems.Gameplay
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.ShowInInspector]
 #endif
-        IWorldToGridIndexConverter _worldToGridIndexConverter;
+        IWorldToGridIndexConverter<GridEntityQueryData> _worldToGridIndexConverter;
 
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.ShowInInspector]

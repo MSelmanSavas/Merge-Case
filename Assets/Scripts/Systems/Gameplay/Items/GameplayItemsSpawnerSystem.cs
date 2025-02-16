@@ -36,7 +36,6 @@ namespace MergeCase.Systems.Gameplay
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.ShowInInspector]
 #endif
-        Transform _itemsParent;
 
         public bool TryInitialize(SystemUpdateContext<GameplaySystemBase> data)
         {
@@ -70,8 +69,7 @@ namespace MergeCase.Systems.Gameplay
                 return false;
             }
 
-            _itemsParent = new GameObject().transform;
-            _itemsParent.gameObject.name = "Items";
+
 
             SpawnItemsFromConfig(_gameplayItemsConfigs, _gameplayGridsConfigs, _itemsEntityCollection, _gridsEntityCollection);
             return true;
@@ -95,7 +93,7 @@ namespace MergeCase.Systems.Gameplay
                 {
                     var randomfloat = Random.Range(0f, 1f);
 
-                    if (randomfloat >= 0.3f)
+                    if (randomfloat >= 0.1f)
                     {
                         continue;
                     }
@@ -116,7 +114,7 @@ namespace MergeCase.Systems.Gameplay
 
                     position += positionOffset;
 
-                    var spawnedObj = GameObject.Instantiate(basicItemPrefab, position, Quaternion.identity, _itemsParent);
+                    var spawnedObj = GameObject.Instantiate(basicItemPrefab, position, Quaternion.identity);
                     var entity = spawnedObj.GetComponent<IEntity>();
 
                     if (entity.TryGetEntityComponent(out IndexComponent indexComponent))

@@ -8,6 +8,11 @@ namespace MergeCase.Entities.Components.Items
     {
         [field: SerializeField]
         public ItemType Type { get; private set; }
+
+        public bool IsSame(ItemTypeComponent other)
+        {
+            return Type == other.Type;
+        }
     }
 }
 

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2e5f0e20861e74aa3d8814d6a3bb38, type: 3}
+  m_Name: DefaultMergeItemsConfigs
+  m_EditorClassIdentifier: 
+  <MergeItemDatas>k__BackingField:
+  - MergeType: 0
+    RequiredAmount: 3
+    MergedToPrefab: {fileID: 3178144767178789519, guid: 1adf35d825f77a34fa21ed4311f4ced8, type: 3}
+  - MergeType: 1
+    RequiredAmount: 3
+    MergedToPrefab: {fileID: 3178144767178789519, guid: 9d0c7b88cb01c7140a07c31a118fef0e, type: 3}

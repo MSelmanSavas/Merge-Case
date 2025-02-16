@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace MergeCase.Systems.Gameplay
 {
-    public class GameplayGridsSystem : GameplaySystemBase, IInitializable<SystemUpdateContext<GameplaySystemBase>>, IEntityCollection<GridEntityQueryData>, IWorldToGridIndexConverter, IGridIndexToWorldConverter
+    public class GameplayGridsSystem : GameplaySystemBase, IInitializable<SystemUpdateContext<GameplaySystemBase>>, IEntityCollection<GridEntityQueryData>, IWorldToGridIndexConverter<GridEntityQueryData>, IGridIndexToWorldConverter<GridEntityQueryData>
     {
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.ShowInInspector]
@@ -82,8 +82,8 @@ namespace MergeCase.Systems.Gameplay
             var xHalf = ((worldPos.x + gridSizeHalf.x) / gridSizeHalf.x);
             var yHalf = ((worldPos.y + gridSizeHalf.y) / gridSizeHalf.y);
 
-            int y = Mathf.RoundToInt((xHalf + yHalf) * 0.5f);
             int x = Mathf.RoundToInt((-xHalf + yHalf) * -0.5f);
+            int y = Mathf.RoundToInt((xHalf + yHalf) * 0.5f);
 
             return new Vector2Int(x, y);
         }
@@ -91,12 +91,14 @@ namespace MergeCase.Systems.Gameplay
         public Vector3 GetWorldPos(Vector2Int gridIndex)
         {
             var gridSize = _gameplayGridConfigs.GridSize;
+            var gridSizeHalf = gridSize / 2f;
             var worldPos = Vector3.zero;
 
-            worldPos.x += (gridSize.x / 2f) * (gridIndex.y + 1);
-            worldPos.y += (gridSize.y / 2f) * (gridIndex.y + 1);
+            worldPos.x = ((gridIndex.x * gridSizeHalf.x) + (gridIndex.y * gridSizeHalf.x));
+            worldPos.y = (-(gridIndex.x * gridSizeHalf.y) + (gridIndex.y * gridSizeHalf.y));
 
             worldPos += _gameplayGridConfigs.StartPositionOffset;
+
             return worldPos;
         }
     }
