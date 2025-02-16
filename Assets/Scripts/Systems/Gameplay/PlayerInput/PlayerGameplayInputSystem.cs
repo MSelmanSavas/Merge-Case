@@ -151,7 +151,7 @@ namespace MergeCase.Systems.Gameplay
                 return;
             }
 
-            if (!_selectedEntity.TryGetEntityComponent(out GameObjectComponent gameObjectComponent))
+            if (!_selectedEntity.TryGetEntityComponent(out GameObjectComponent selectedEntityGameObjectComponent))
             {
                 return;
             }
@@ -178,9 +178,18 @@ namespace MergeCase.Systems.Gameplay
 
             gridEntity.TryGetEntityComponent(out GameObjectComponent gridGameObjectComponent);
 
-            var itemEntityTransform = gameObjectComponent.GetGameObject().transform;
-
+            var itemEntityTransform = selectedEntityGameObjectComponent.GetGameObject().transform;
             itemEntityTransform.position = gridGameObjectComponent.GetGameObject().transform.position.WithZ(itemEntityTransform.position.z);
+
+
+            _selectedEntity.TryGetEntityComponent(out IndexComponent selectedEntityIndexComponent);
+
+            var itemPreviousIndex = selectedEntityIndexComponent.GetIndex();
+
+            _itemEntities.TryRemoveEntity(new ItemEntityQueryData { Index = itemPreviousIndex });
+            _itemEntities.TryAddEntity(new ItemEntityQueryData { Index = gridIndex }, _selectedEntity);
+
+            selectedEntityIndexComponent.SetIndex(gridIndex);
 
             ResetInternalValues();
         }
