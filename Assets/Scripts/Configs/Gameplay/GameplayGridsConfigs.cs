@@ -8,21 +8,22 @@ namespace MergeCase.General.Config.Gameplay
     public class GameplayGridsConfigs : ScriptableObject
     {
         [field: SerializeField]
-        public Vector2Int AreaSize { get; private set; }
+        public Vector2Int TotalGridSize { get; private set; }
 
         [field: SerializeField]
-        public Vector2 AreaOffset { get; private set; }
+        public Vector2 GridSize { get; private set; }
 
         [field: SerializeField]
         public float XStepOffset { get; private set; }
 
         [field: SerializeField]
         public float YStepOffset { get; private set; }
+
         [field: SerializeField]
         public float ZStepOffset { get; private set; }
 
         [field: SerializeField]
-        public Vector2 PositionOffset { get; private set; }
+        public Vector2 StartPositionOffset { get; private set; }
 
         [field: SerializeField]
         public GameObject BasicAreaPrefab { get; private set; }

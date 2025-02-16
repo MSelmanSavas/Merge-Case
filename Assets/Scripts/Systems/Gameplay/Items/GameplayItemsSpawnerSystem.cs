@@ -78,7 +78,7 @@ namespace MergeCase.Systems.Gameplay
             var basicItemPrefab = gameplayItemsConfigs.BasicItemPrefab;
             var positionOffset = gameplayItemsConfigs.PositionOffset;
 
-            var gridAreaSize = gameplayGridsConfigs.AreaSize;
+            var gridAreaSize = gameplayGridsConfigs.TotalGridSize;
 
             for (int y = 0; y < gridAreaSize.y; y++)
             {

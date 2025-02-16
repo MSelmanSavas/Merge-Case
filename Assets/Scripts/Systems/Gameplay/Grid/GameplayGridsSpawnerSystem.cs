@@ -53,18 +53,27 @@ namespace MergeCase.Systems.Gameplay
         void SpawnAreaFromConfig(GameplayGridsConfigs gameplayAreaConfigs)
         {
             var areaPrefab = gameplayAreaConfigs.BasicAreaPrefab;
-            var areaSize = gameplayAreaConfigs.AreaSize;
-            var areaOffset = _gameplayGridConfigs.AreaOffset;
-            var positionOfset = _gameplayGridConfigs.PositionOffset;
+            var totalGridSize = gameplayAreaConfigs.TotalGridSize;
+            var gridSize = _gameplayGridConfigs.GridSize;
+            var startPositionOfset = _gameplayGridConfigs.StartPositionOffset;
             var xStepOffset = _gameplayGridConfigs.XStepOffset;
             var yStepOffset = _gameplayGridConfigs.YStepOffset;
             var zStepOffset = _gameplayGridConfigs.ZStepOffset;
 
-            Vector3 startPos = positionOfset;
+            Vector3 startPos = startPositionOfset;
 
-            for (int y = 0; y < areaSize.y; y++)
+            for (int y = 0; y < totalGridSize.y; y++)
             {
-                for (int x = 0; x < areaSize.x; x++)
+                startPos = startPositionOfset;
+
+                startPos.x += (gridSize.x / 2f) * y;
+                startPos.y += gridSize.y * y;
+
+                startPos.x += xStepOffset * y;
+                startPos.y += yStepOffset * y;
+                startPos.z += zStepOffset * y;
+
+                for (int x = 0; x < totalGridSize.x; x++)
                 {
                     Vector2Int entityIndex = new(x, y);
 
@@ -77,15 +86,9 @@ namespace MergeCase.Systems.Gameplay
                     },
                     entity);
 
-                    startPos.x += areaOffset.x;
+                    startPos.x += (gridSize.x / 2f);
+                    startPos.y -= gridSize.y;
                 }
-
-                startPos.x = positionOfset.x;
-                startPos.y += areaOffset.y;
-
-                startPos.x += xStepOffset * (y + 1);
-                startPos.y += yStepOffset * y;
-                startPos.z += zStepOffset * (y + 1);
             }
         }
     }
