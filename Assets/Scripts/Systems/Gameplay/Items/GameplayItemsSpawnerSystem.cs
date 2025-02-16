@@ -84,6 +84,13 @@ namespace MergeCase.Systems.Gameplay
             {
                 for (int x = 0; x < gridAreaSize.x; x++)
                 {
+                    var randomfloat = Random.Range(0f, 1f);
+
+                    if (randomfloat >= 0.3f)
+                    {
+                        continue;
+                    }
+
                     Vector2Int gridIndex = new(x, y);
 
                     if (!gridEntities.TryGetEntity(new GridEntityQueryData { Index = gridIndex }, out IEntity gridEntity))
