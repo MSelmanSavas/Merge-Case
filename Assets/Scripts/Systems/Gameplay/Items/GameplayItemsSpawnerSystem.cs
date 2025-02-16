@@ -93,7 +93,7 @@ namespace MergeCase.Systems.Gameplay
                 {
                     var randomfloat = Random.Range(0f, 1f);
 
-                    if (randomfloat >= 0.1f)
+                    if (randomfloat >= 0.25f)
                     {
                         continue;
                     }

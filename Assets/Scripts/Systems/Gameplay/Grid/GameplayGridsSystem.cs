@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using MergeCase.Entities;
 using MergeCase.General.Config;
@@ -101,6 +102,8 @@ namespace MergeCase.Systems.Gameplay
 
             return worldPos;
         }
+
+        public IEnumerator GetEnumerator() => _gridEntities.GetEnumerator();
     }
 }
 

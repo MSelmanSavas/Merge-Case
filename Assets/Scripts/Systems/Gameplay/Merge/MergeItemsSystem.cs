@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using MergeCase.Entities;
 using MergeCase.Entities.Components.Common;
 using MergeCase.Entities.Components.Items;
@@ -36,7 +37,7 @@ namespace MergeCase.Systems.Gameplay
 #endif
         IGridIndexToWorldConverter<ItemEntityQueryData> _gridToWorldConverter;
 
-
+        Queue<Vector2Int> _searchQueue = new();
         bool[] _checkedGrids;
 
         public bool TryInitialize(SystemUpdateContext<GameplaySystemBase> data)
@@ -129,13 +130,11 @@ namespace MergeCase.Systems.Gameplay
 
         void FloodFillSearchSimilarItems(Vector2Int startIndex, ItemTypeComponent itemTypeComponent, Vector2Int gridSize, List<IEntity> similarEntities)
         {
-            Queue<Vector2Int> searchQueue = new();
+            _searchQueue.Enqueue(startIndex);
 
-            searchQueue.Enqueue(startIndex);
-
-            while (searchQueue.Count > 0)
+            while (_searchQueue.Count > 0)
             {
-                Vector2Int checkIndex = searchQueue.Dequeue();
+                Vector2Int checkIndex = _searchQueue.Dequeue();
 
                 if (checkIndex.x < 0 || checkIndex.x >= gridSize.x || checkIndex.y < 0 || checkIndex.y >= gridSize.y)
                 {
@@ -183,7 +182,7 @@ namespace MergeCase.Systems.Gameplay
                         continue;
                     }
 
-                    searchQueue.Enqueue(offsetIndex);
+                    _searchQueue.Enqueue(offsetIndex);
                 }
             }
         }
@@ -201,6 +200,11 @@ namespace MergeCase.Systems.Gameplay
             bool hasSpawnIndexSet = false;
             Vector2Int spawnIndex = Vector2Int.zero;
 
+            bool hasMergePositionSet = false;
+            Vector3 mergePosition = Vector3.zero;
+
+            Sequence sequence = DOTween.Sequence();
+
             foreach (var entityToMerge in entitiesToMerge)
             {
                 if (entityToMerge.TryGetEntityComponent(out IndexComponent indexComponent))
@@ -217,22 +221,45 @@ namespace MergeCase.Systems.Gameplay
 
                 if (entityToMerge.TryGetEntityComponent(out GameObjectComponent gameObjectComponent))
                 {
-                    GameObject.Destroy(gameObjectComponent.GetGameObject());
+                    var transform = gameObjectComponent.GetGameObject().transform;
+
+                    if (!hasMergePositionSet)
+                    {
+                        mergePosition = transform.position;
+                        hasMergePositionSet = true;
+                    }
+
+                    sequence.Join(transform.DOMove(mergePosition, 0.5f));
                 }
             }
 
-            var toBeSpawnedEntity = mergeData.MergedToPrefab;
-            var position = _gridToWorldConverter.GetWorldPos(spawnIndex);
-
-            var spawnedObj = GameObject.Instantiate(toBeSpawnedEntity, position, Quaternion.identity);
-            var spawnedEntity = spawnedObj.GetComponent<IEntity>();
-
-            if (spawnedEntity.TryGetEntityComponent(out IndexComponent spawnedIndexComponent))
+            List<IEntity> entitiesToDestroy = new List<IEntity>(entitiesToMerge);
+            sequence.AppendCallback(() =>
             {
-                spawnedIndexComponent.SetIndex(spawnIndex);
-            }
+                foreach (var entityToDestroy in entitiesToDestroy)
+                {
+                    if (entityToDestroy.TryGetEntityComponent(out GameObjectComponent gameObjectComponent))
+                    {
+                        GameObject.Destroy(gameObjectComponent.GetGameObject());
+                    }
+                }
+            });
 
-            _itemEntities.TryAddEntity(new ItemEntityQueryData { Index = spawnIndex }, spawnedEntity);
+            sequence.AppendCallback(() =>
+            {
+                var toBeSpawnedEntity = mergeData.MergedToPrefab;
+                var position = _gridToWorldConverter.GetWorldPos(spawnIndex);
+
+                var spawnedObj = GameObject.Instantiate(toBeSpawnedEntity, position, Quaternion.identity);
+                var spawnedEntity = spawnedObj.GetComponent<IEntity>();
+
+                if (spawnedEntity.TryGetEntityComponent(out IndexComponent spawnedIndexComponent))
+                {
+                    spawnedIndexComponent.SetIndex(spawnIndex);
+                }
+
+                _itemEntities.TryAddEntity(new ItemEntityQueryData { Index = spawnIndex }, spawnedEntity);
+            });
         }
     }
 }

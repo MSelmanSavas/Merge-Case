@@ -6,12 +6,14 @@ namespace MergeCase.Entities
 {
     public interface IEntityCollection<T> : IEntityProvider<T>
     {
+        public IEnumerator GetEnumerator();
         public bool TryAddEntity(T entityQueryData, IEntity entity);
         public bool TryRemoveEntity(T entityQueryData);
     }
 
     public interface IEntityCollection<T1, T2> : IEntityProvider<T1, T2> where T2 : IEntity
     {
+        public IEnumerator<T2> GetEnumerator();
         public bool TryAddEntity(T1 entityQueryData, T2 entity);
         public bool TryRemoveEntity(T1 entityQueryData);
     }

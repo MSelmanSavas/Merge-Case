@@ -15,7 +15,7 @@ namespace MergeCase.Systems.Gameplay
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.ShowInInspector]
 #endif
-        Dictionary<ItemEntityQueryData, IEntity> _gridEntities = new();
+        Dictionary<ItemEntityQueryData, IEntity> _itemEntities = new();
 
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.ShowInInspector]
@@ -52,8 +52,8 @@ namespace MergeCase.Systems.Gameplay
             _itemsParent = new GameObject().transform;
             _itemsParent.gameObject.name = "Items";
 
-            _gridEntities ??= new();
-            _gridEntities.Clear();
+            _itemEntities ??= new();
+            _itemEntities.Clear();
 
             return true;
         }
@@ -61,19 +61,19 @@ namespace MergeCase.Systems.Gameplay
 
         public bool TryDeInitialize(SystemUpdateContext<GameplaySystemBase> data)
         {
-            _gridEntities.Clear();
+            _itemEntities.Clear();
             GameObject.Destroy(_itemsParent);
             return true;
         }
 
         public bool TryAddEntity(ItemEntityQueryData entityQueryData, IEntity entity)
         {
-            if (_gridEntities.ContainsKey(entityQueryData))
+            if (_itemEntities.ContainsKey(entityQueryData))
             {
                 return false;
             }
 
-            _gridEntities.Add(entityQueryData, entity);
+            _itemEntities.Add(entityQueryData, entity);
 
             if (entity.TryGetEntityComponent(out GameObjectComponent gameObjectComponent))
             {
@@ -86,12 +86,12 @@ namespace MergeCase.Systems.Gameplay
 
         public bool TryRemoveEntity(ItemEntityQueryData entityQueryData)
         {
-            if (!_gridEntities.TryGetValue(entityQueryData, out IEntity entity))
+            if (!_itemEntities.TryGetValue(entityQueryData, out IEntity entity))
             {
                 return false;
             }
 
-            _gridEntities.Remove(entityQueryData);
+            _itemEntities.Remove(entityQueryData);
 
             if (entity.TryGetEntityComponent(out GameObjectComponent gameObjectComponent))
             {
@@ -104,7 +104,7 @@ namespace MergeCase.Systems.Gameplay
 
         public bool TryGetEntity(ItemEntityQueryData entityQueryData, out IEntity entity)
         {
-            return _gridEntities.TryGetValue(entityQueryData, out entity);
+            return _itemEntities.TryGetValue(entityQueryData, out entity);
         }
 
         public Vector2Int GetGridIndex(Vector3 worldPos)
@@ -139,5 +139,7 @@ namespace MergeCase.Systems.Gameplay
 
             return worldPos;
         }
+
+        public IEnumerator GetEnumerator() => _itemEntities.GetEnumerator();
     }
 }

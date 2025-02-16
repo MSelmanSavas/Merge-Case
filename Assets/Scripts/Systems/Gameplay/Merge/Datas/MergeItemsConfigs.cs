@@ -14,9 +14,24 @@ namespace MergeCase.General.Config.Gameplay
 
         public bool TryGetMergeItemData(ItemType itemType, int itemCount, out MergeItemData mergeItemData)
         {
-            mergeItemData = MergeItemDatas.FirstOrDefault(x => x.MergeType == itemType && x.RequiredAmount <= itemCount);
+            foreach (var searchMergeItemData in MergeItemDatas)
+            {
+                if (searchMergeItemData.MergeType != itemType)
+                {
+                    continue;
+                }
 
-            return mergeItemData != null;
+                if (searchMergeItemData.RequiredAmount > itemCount)
+                {
+                    continue;
+                }
+
+                mergeItemData = searchMergeItemData;
+                return true;
+            }
+
+            mergeItemData = null;
+            return false;
         }
     }
 }
