@@ -14,7 +14,7 @@ namespace MergeCase.Systems.Gameplay
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.ShowInInspector]
 #endif
-        GameplayAreaConfigs _gameplayAreaConfigs;
+        GameplayAreaConfigs _gameplayGridConfigs;
 
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.ShowInInspector]
@@ -35,13 +35,13 @@ namespace MergeCase.Systems.Gameplay
                 return false;
             }
 
-            if (!configProvider.TryGet(out _gameplayAreaConfigs))
+            if (!configProvider.TryGet(out _gameplayGridConfigs))
             {
                 UnityLogger.LogErrorWithTag($"{GetType()} could not find {typeof(GameplayAreaConfigs)} as config! Cannot initialize!");
                 return false;
             }
 
-            SpawnAreaFromConfig(_gameplayAreaConfigs);
+            SpawnAreaFromConfig(_gameplayGridConfigs);
             return true;
         }
 
@@ -54,10 +54,13 @@ namespace MergeCase.Systems.Gameplay
         {
             var areaPrefab = gameplayAreaConfigs.BasicAreaPrefab;
             var areaSize = gameplayAreaConfigs.AreaSize;
-            var areaOffset = _gameplayAreaConfigs.AreaOffset;
-            var positionOfset = _gameplayAreaConfigs.PositionOffset;
+            var areaOffset = _gameplayGridConfigs.AreaOffset;
+            var positionOfset = _gameplayGridConfigs.PositionOffset;
+            var xStepOffset = _gameplayGridConfigs.XStepOffset;
+            var yStepOffset = _gameplayGridConfigs.YStepOffset;
+            var zStepOffset = _gameplayGridConfigs.ZStepOffset;
 
-            Vector2 startPos = positionOfset;
+            Vector3 startPos = positionOfset;
 
             for (int y = 0; y < areaSize.y; y++)
             {
@@ -79,6 +82,10 @@ namespace MergeCase.Systems.Gameplay
 
                 startPos.x = positionOfset.x;
                 startPos.y += areaOffset.y;
+
+                startPos.x += xStepOffset * (y + 1);
+                startPos.y += yStepOffset * y;
+                startPos.z += zStepOffset * (y + 1);
             }
         }
     }
