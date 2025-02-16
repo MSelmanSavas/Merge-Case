@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MergeCase.Entities.Unity
+namespace MergeCase.Entities.Components.Unity
 {
     public class GameObjectComponent : IComponent
     {

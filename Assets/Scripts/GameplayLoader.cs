@@ -31,6 +31,7 @@ public class GameplayLoader : MonoBehaviour
         systemUpdater.TryAddGameSystemImmediately(new GameplayItemsSystem(), autoInitialize: false);
 
         systemUpdater.TryAddGameSystemImmediately(new PlayerGameplayInputSystem(), autoInitialize: false);
+        systemUpdater.TryAddGameSystemImmediately(new MergeItemsSystem(), autoInitialize: false);
 
         systemUpdater.UpdateContext.DataCollection.TryAdd(_configProvider);
 

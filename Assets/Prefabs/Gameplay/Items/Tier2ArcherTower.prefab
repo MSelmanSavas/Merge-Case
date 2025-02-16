@@ -47,23 +47,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entityComponents:
     keyData:
-    - _typeString: MergeCase.Entities.Unity.GameObjectComponent, Assembly-CSharp,
+    - _typeString: MergeCase.Entities.Components.Items.ItemTypeComponent, Assembly-CSharp,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    - _typeString: MergeCase.Entities.Unity.IndexComponent, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
+    - _typeString: MergeCase.Entities.Components.Common.IndexComponent, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    - _typeString: MergeCase.Entities.Components.Unity.GameObjectComponent, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
     valueData:
-    - rid: 2785884661184724992
-    - rid: 2785884661184724995
+    - rid: 2785884661184724998
+    - rid: 2785884661184724999
+    - rid: 2785884661184725000
   references:
     version: 2
     RefIds:
-    - rid: 2785884661184724992
-      type: {class: GameObjectComponent, ns: MergeCase.Entities.Unity, asm: Assembly-CSharp}
+    - rid: 2785884661184724998
+      type: {class: ItemTypeComponent, ns: MergeCase.Entities.Components.Items, asm: Assembly-CSharp}
+      data:
+        <Type>k__BackingField: 1
+    - rid: 2785884661184724999
+      type: {class: IndexComponent, ns: MergeCase.Entities.Components.Common, asm: Assembly-CSharp}
+      data: 
+    - rid: 2785884661184725000
+      type: {class: GameObjectComponent, ns: MergeCase.Entities.Components.Unity, asm: Assembly-CSharp}
       data:
         _connectedGameObj: {fileID: 3178144767178789519}
-    - rid: 2785884661184724995
-      type: {class: IndexComponent, ns: MergeCase.Entities.Unity, asm: Assembly-CSharp}
-      data: 
 --- !u!1 &5984610156313546074
 GameObject:
   m_ObjectHideFlags: 0

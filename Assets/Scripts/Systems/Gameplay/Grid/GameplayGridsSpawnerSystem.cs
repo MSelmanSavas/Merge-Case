@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MergeCase.Entities;
-using MergeCase.Entities.Unity;
+using MergeCase.Entities.Components.Common;
 using MergeCase.General.Config;
 using MergeCase.General.Config.Gameplay;
 using MergeCase.General.Interfaces;

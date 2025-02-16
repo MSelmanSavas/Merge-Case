@@ -1,5 +1,6 @@
 using MergeCase.Entities;
-using MergeCase.Entities.Unity;
+using MergeCase.Entities.Components.Common;
+using MergeCase.Entities.Components.Unity;
 using MergeCase.General.Interfaces;
 using MergeCase.Systems.Updater;
 using UnityEngine;
