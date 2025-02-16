@@ -130,8 +130,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _entityComponents:
-    keyData: []
-    valueData: []
+    keyData:
+    - _typeString: MergeCase.Entities.Unity.GameObjectComponent, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    valueData:
+    - rid: 2785884661184724993
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 2785884661184724993
+      type: {class: GameObjectComponent, ns: MergeCase.Entities.Unity, asm: Assembly-CSharp}
+      data:
+        _connectedGameObj: {fileID: 2530118385278956861}

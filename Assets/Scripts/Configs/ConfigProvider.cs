@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using MergeCase.General.Interfaces;
@@ -73,6 +74,11 @@ namespace MergeCase.General.Config
                 EditorUtility.SetDirty(this);
                 AssetDatabase.SaveAssetIfDirty(this);
             }
+        }
+
+        internal bool TryGet(out object gameplayGridConfigs)
+        {
+            throw new NotImplementedException();
         }
 #endif
     }

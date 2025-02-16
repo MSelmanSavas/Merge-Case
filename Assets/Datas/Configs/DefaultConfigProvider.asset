@@ -12,11 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3125268c8a380a6419dcab8ebf87654d, type: 3}
   m_Name: DefaultConfigProvider
   m_EditorClassIdentifier: 
+  _configList:
+  - {fileID: 11400000, guid: ddf91bce0ffc1154e833c7d0747645c7, type: 2}
+  - {fileID: 11400000, guid: c9b488d0c1c602944b653971f2c08fbc, type: 2}
   _configs:
     keyData:
-    - _typeString: MergeCase.General.Config.Gameplay.GameplayAreaConfigs, Assembly-CSharp,
+    - _typeString: 
+    - _typeString: MergeCase.General.Config.Gameplay.GameplayItemsConfigs, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    - _typeString: MergeCase.General.Config.Gameplay.GameplayGridsConfigs, Assembly-CSharp,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
     valueData:
     - {fileID: 11400000, guid: ddf91bce0ffc1154e833c7d0747645c7, type: 2}
-  _configList:
-  - {fileID: 11400000, guid: ddf91bce0ffc1154e833c7d0747645c7, type: 2}
+    - {fileID: 11400000, guid: c9b488d0c1c602944b653971f2c08fbc, type: 2}
+    - {fileID: 11400000, guid: ddf91bce0ffc1154e833c7d0747645c7, type: 2}

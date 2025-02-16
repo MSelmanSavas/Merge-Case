@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace MergeCase.General.Config.Gameplay
 {
-    [CreateAssetMenu(menuName = "MergeCase/Configs/Create Gameplay Area Configs", fileName = "DefaultGameplayAreaConfigs")]
-    public class GameplayAreaConfigs : ScriptableObject
+    [CreateAssetMenu(menuName = "MergeCase/Configs/Create Gameplay Grids Configs", fileName = "DefaultGameplayGridsConfigs")]
+    public class GameplayGridsConfigs : ScriptableObject
     {
         [field: SerializeField]
         public Vector2Int AreaSize { get; private set; }

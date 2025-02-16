@@ -14,7 +14,7 @@ namespace MergeCase.Systems.Gameplay
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.ShowInInspector]
 #endif
-        GameplayAreaConfigs _gameplayGridConfigs;
+        GameplayGridsConfigs _gameplayGridConfigs;
 
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.ShowInInspector]
@@ -37,7 +37,7 @@ namespace MergeCase.Systems.Gameplay
 
             if (!configProvider.TryGet(out _gameplayGridConfigs))
             {
-                UnityLogger.LogErrorWithTag($"{GetType()} could not find {typeof(GameplayAreaConfigs)} as config! Cannot initialize!");
+                UnityLogger.LogErrorWithTag($"{GetType()} could not find {typeof(GameplayGridsConfigs)} as config! Cannot initialize!");
                 return false;
             }
 
@@ -50,7 +50,7 @@ namespace MergeCase.Systems.Gameplay
             return true;
         }
 
-        void SpawnAreaFromConfig(GameplayAreaConfigs gameplayAreaConfigs)
+        void SpawnAreaFromConfig(GameplayGridsConfigs gameplayAreaConfigs)
         {
             var areaPrefab = gameplayAreaConfigs.BasicAreaPrefab;
             var areaSize = gameplayAreaConfigs.AreaSize;
