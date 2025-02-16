@@ -32,6 +32,11 @@ namespace MergeCase.Systems.Gameplay
 #endif
         IEntityCollection<GridEntityQueryData> _gridsEntityCollection;
 
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.ShowInInspector]
+#endif
+        Transform _itemsParent;
+
         public bool TryInitialize(SystemUpdateContext<GameplaySystemBase> data)
         {
             if (!data.SystemUpdater.TryGetGameSystemByType(out _itemsEntityCollection))
@@ -63,6 +68,9 @@ namespace MergeCase.Systems.Gameplay
                 UnityLogger.LogErrorWithTag($"{GetType()} could not find {typeof(GameplayGridsConfigs)} as config! Cannot initialize!");
                 return false;
             }
+
+            _itemsParent = new GameObject().transform;
+            _itemsParent.gameObject.name = "Items";
 
             SpawnItemsFromConfig(_gameplayItemsConfigs, _gameplayGridsConfigs, _itemsEntityCollection, _gridsEntityCollection);
             return true;
@@ -107,8 +115,13 @@ namespace MergeCase.Systems.Gameplay
 
                     position += positionOffset;
 
-                    var spawnedObj = GameObject.Instantiate(basicItemPrefab, position, Quaternion.identity);
+                    var spawnedObj = GameObject.Instantiate(basicItemPrefab, position, Quaternion.identity, _itemsParent);
                     var entity = spawnedObj.GetComponent<IEntity>();
+
+                    if (entity.TryGetEntityComponent(out IndexComponent indexComponent))
+                    {
+                        indexComponent.SetIndex(gridIndex);
+                    }
 
                     _itemsEntites.TryAddEntity(new ItemEntityQueryData
                     {

@@ -133,8 +133,11 @@ MonoBehaviour:
     keyData:
     - _typeString: MergeCase.Entities.Unity.GameObjectComponent, Assembly-CSharp,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    - _typeString: MergeCase.Entities.Unity.IndexComponent, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
     valueData:
     - rid: 2785884661184724993
+    - rid: 2785884661184724997
   references:
     version: 2
     RefIds:
@@ -142,3 +145,6 @@ MonoBehaviour:
       type: {class: GameObjectComponent, ns: MergeCase.Entities.Unity, asm: Assembly-CSharp}
       data:
         _connectedGameObj: {fileID: 2530118385278956861}
+    - rid: 2785884661184724997
+      type: {class: IndexComponent, ns: MergeCase.Entities.Unity, asm: Assembly-CSharp}
+      data: 

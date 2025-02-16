@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MergeCase.Entities;
+using MergeCase.Entities.Unity;
 using MergeCase.General.Config;
 using MergeCase.General.Config.Gameplay;
 using MergeCase.General.Interfaces;
@@ -21,6 +22,11 @@ namespace MergeCase.Systems.Gameplay
 #endif
         IEntityCollection<GridEntityQueryData> _gridEntityCollection;
 
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.ShowInInspector]
+#endif
+        Transform _gridParent;
+
         public bool TryInitialize(SystemUpdateContext<GameplaySystemBase> data)
         {
             if (!data.SystemUpdater.TryGetGameSystemByType(out _gridEntityCollection))
@@ -40,6 +46,9 @@ namespace MergeCase.Systems.Gameplay
                 UnityLogger.LogErrorWithTag($"{GetType()} could not find {typeof(GameplayGridsConfigs)} as config! Cannot initialize!");
                 return false;
             }
+
+            _gridParent = new GameObject().transform;
+            _gridParent.gameObject.name = "Grids";
 
             SpawnAreaFromConfig(_gameplayGridConfigs);
             return true;
@@ -66,18 +75,22 @@ namespace MergeCase.Systems.Gameplay
             {
                 for (int x = 0; x < totalGridSize.x; x++)
                 {
-                    Vector2Int entityIndex = new(x, y);
+                    Vector2Int gridIndex = new(x, y);
 
-                    var spawnedObj = GameObject.Instantiate(areaPrefab, startPos, Quaternion.identity);
+                    var spawnedObj = GameObject.Instantiate(areaPrefab, startPos, Quaternion.identity, _gridParent);
                     var entity = spawnedObj.GetComponent<IEntity>();
+
+                    if (entity.TryGetEntityComponent(out IndexComponent indexComponent))
+                    {
+                        indexComponent.SetIndex(gridIndex);
+                    }
 
                     _gridEntityCollection.TryAddEntity(new GridEntityQueryData
                     {
-                        Index = entityIndex,
+                        Index = gridIndex,
                     },
                     entity);
 
-                    Debug.DrawLine(startPos, startPos + Vector3.up, Color.red, 10f);
                     startPos.x += (gridSize.x / 2f);
                     startPos.y -= (gridSize.y / 2f);
                 }
