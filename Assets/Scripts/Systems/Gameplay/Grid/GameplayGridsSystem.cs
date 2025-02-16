@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace MergeCase.Systems.Gameplay
 {
-    public class GameplayGridsSystem : GameplaySystemBase, IInitializable<SystemUpdateContext<GameplaySystemBase>>, IEntityCollection<GridEntityQueryData>, IWorldToGridIndexConverter
+    public class GameplayGridsSystem : GameplaySystemBase, IInitializable<SystemUpdateContext<GameplaySystemBase>>, IEntityCollection<GridEntityQueryData>, IWorldToGridIndexConverter, IGridIndexToWorldConverter
     {
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.ShowInInspector]
@@ -86,6 +86,18 @@ namespace MergeCase.Systems.Gameplay
             int x = Mathf.RoundToInt((-xHalf + yHalf) * -0.5f);
 
             return new Vector2Int(x, y);
+        }
+
+        public Vector3 GetWorldPos(Vector2Int gridIndex)
+        {
+            var gridSize = _gameplayGridConfigs.GridSize;
+            var worldPos = Vector3.zero;
+
+            worldPos.x += (gridSize.x / 2f) * (gridIndex.y + 1);
+            worldPos.y += (gridSize.y / 2f) * (gridIndex.y + 1);
+
+            worldPos += _gameplayGridConfigs.StartPositionOffset;
+            return worldPos;
         }
     }
 }

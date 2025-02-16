@@ -77,6 +77,7 @@ namespace MergeCase.Systems.Gameplay
                     },
                     entity);
 
+                    Debug.DrawLine(startPos, startPos + Vector3.up, Color.red, 10f);
                     startPos.x += (gridSize.x / 2f);
                     startPos.y -= (gridSize.y / 2f);
                 }
