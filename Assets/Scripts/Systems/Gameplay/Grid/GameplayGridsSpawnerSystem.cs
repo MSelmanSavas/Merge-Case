@@ -64,15 +64,6 @@ namespace MergeCase.Systems.Gameplay
 
             for (int y = 0; y < totalGridSize.y; y++)
             {
-                startPos = startPositionOfset;
-
-                startPos.x += (gridSize.x / 2f) * y;
-                startPos.y += gridSize.y * y;
-
-                startPos.x += xStepOffset * y;
-                startPos.y += yStepOffset * y;
-                startPos.z += zStepOffset * y;
-
                 for (int x = 0; x < totalGridSize.x; x++)
                 {
                     Vector2Int entityIndex = new(x, y);
@@ -87,8 +78,17 @@ namespace MergeCase.Systems.Gameplay
                     entity);
 
                     startPos.x += (gridSize.x / 2f);
-                    startPos.y -= gridSize.y;
+                    startPos.y -= (gridSize.y / 2f);
                 }
+
+                startPos = startPositionOfset;
+
+                startPos.x += (gridSize.x / 2f) * (y + 1);
+                startPos.y += (gridSize.y / 2f) * (y + 1);
+
+                startPos.x += xStepOffset * (y + 1);
+                startPos.y += yStepOffset * (y + 1);
+                startPos.z += zStepOffset * (y + 1);
             }
         }
     }

@@ -64,7 +64,7 @@ namespace MergeCase.Systems.Gameplay
                 return false;
             }
 
-            SpawnItemsFromConfig(_gameplayItemsConfigs, _gameplayGridsConfigs, _itemsEntityCollection, _gridsEntityCollection);
+            //SpawnItemsFromConfig(_gameplayItemsConfigs, _gameplayGridsConfigs, _itemsEntityCollection, _gridsEntityCollection);
             return true;
         }
 

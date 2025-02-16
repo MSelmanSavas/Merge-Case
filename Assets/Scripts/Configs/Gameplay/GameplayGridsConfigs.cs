@@ -23,7 +23,7 @@ namespace MergeCase.General.Config.Gameplay
         public float ZStepOffset { get; private set; }
 
         [field: SerializeField]
-        public Vector2 StartPositionOffset { get; private set; }
+        public Vector3 StartPositionOffset { get; private set; }
 
         [field: SerializeField]
         public GameObject BasicAreaPrefab { get; private set; }
