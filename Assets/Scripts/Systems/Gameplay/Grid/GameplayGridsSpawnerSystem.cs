@@ -19,11 +19,11 @@ namespace MergeCase.Systems.Gameplay
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.ShowInInspector]
 #endif
-        IEntityCollection<GridEntityQueryData> _gameplayGridSystem;
+        IEntityCollection<GridEntityQueryData> _gridEntityCollection;
 
         public bool TryInitialize(SystemUpdateContext<GameplaySystemBase> data)
         {
-            if (!data.SystemUpdater.TryGetGameSystemByType(out _gameplayGridSystem))
+            if (!data.SystemUpdater.TryGetGameSystemByType(out _gridEntityCollection))
             {
                 UnityLogger.LogErrorWithTag($"{GetType()} could not find {typeof(IEntityCollection<GridEntityQueryData>)}! Cannot initialize!");
                 return false;
@@ -63,7 +63,16 @@ namespace MergeCase.Systems.Gameplay
             {
                 for (int x = 0; x < areaSize.x; x++)
                 {
-                    GameObject.Instantiate(areaPrefab, startPos, Quaternion.identity);
+                    Vector2Int entityIndex = new(x, y);
+
+                    var spawnedObj = GameObject.Instantiate(areaPrefab, startPos, Quaternion.identity);
+                    var entity = spawnedObj.GetComponent<IEntity>();
+
+                    _gridEntityCollection.TryAddEntity(new GridEntityQueryData
+                    {
+                        Index = entityIndex,
+                    },
+                    entity);
 
                     startPos.x += areaOffset.x;
                 }
