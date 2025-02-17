@@ -6,6 +6,9 @@ namespace MergeCase.Entities
 {
     public interface IEntity
     {
+        public bool IsActive { get; set; }
+        public bool IsQueryable { get; set; }
+        public bool IsMarkedToBeRemoved { get; set; }
         public virtual bool OnLoad() { return true; }
         public virtual bool OnAfterLoad() { return true; }
         public virtual bool OnSpawned() { return true; }

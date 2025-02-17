@@ -70,6 +70,7 @@ namespace MergeCase.Systems.Gameplay
         {
             if (_itemEntities.ContainsKey(entityQueryData))
             {
+                UnityLogger.LogErrorWithTag($"There is already another entity in : {entityQueryData.Index}! Cannot add item entity : {entity}");
                 return false;
             }
 
@@ -88,6 +89,7 @@ namespace MergeCase.Systems.Gameplay
         {
             if (!_itemEntities.TryGetValue(entityQueryData, out IEntity entity))
             {
+                UnityLogger.LogErrorWithTag($"There is no entity in : {entityQueryData.Index}! Cannot remove entity!");
                 return false;
             }
 

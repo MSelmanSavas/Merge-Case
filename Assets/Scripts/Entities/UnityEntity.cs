@@ -11,6 +11,19 @@ namespace MergeCase.Entities.Unity
         [SerializeField]
         EntityComponentDictionary _entityComponents = new();
 
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.ShowInInspector]
+#endif
+        public bool IsActive { get; set; } = true;
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.ShowInInspector]
+#endif
+        public bool IsQueryable { get; set; } = true;
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.ShowInInspector]
+#endif
+        public bool IsMarkedToBeRemoved { get; set; } = false;
+
         private void Awake()
         {
             foreach (var entityComponentKV in _entityComponents)

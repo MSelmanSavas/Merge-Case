@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MergeCase.Entities;
+using MergeCase.Entities.Components.Unity;
 using MergeCase.General.Interfaces;
 using MergeCase.Systems.Updater;
 using UnityEngine;
@@ -9,22 +10,15 @@ namespace MergeCase.Systems.Gameplay
 {
     public class ItemsCleanupSystem : GameplaySystemBase, IInitializable<SystemUpdateContext<GameplaySystemBase>>, IUpdateable
     {
-#if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.ShowInInspector]
-#endif
-        IEntityCollection<ItemEntityQueryData> _itemEntities;
-
-        IEnumerator _itemsEnumerator;
+        ItemsCleanupData _itemsCleanupData;
 
         public bool TryInitialize(SystemUpdateContext<GameplaySystemBase> data)
         {
-            if (!data.SystemUpdater.TryGetGameSystemByType(out _itemEntities))
+            if (!data.DataCollection.TryGet(out _itemsCleanupData))
             {
-                UnityLogger.LogErrorWithTag($"{GetType()} could not find {typeof(IEntityCollection<ItemEntityQueryData>)}! Cannot initialize!");
+                UnityLogger.LogErrorWithTag($"{GetType()} could not find {typeof(ItemsCleanupData)}! Cannot initialize!");
                 return false;
             }
-
-            _itemsEnumerator = _itemEntities.GetEnumerator();
 
             return true;
         }
@@ -36,15 +30,15 @@ namespace MergeCase.Systems.Gameplay
 
         public bool TryUpdate()
         {
-            while (_itemsEnumerator.MoveNext())
+            foreach (var entity in _itemsCleanupData.ItemEntitesToCleanup)
             {
-                if (_itemsEnumerator.Current is not IEntity entity)
+                if (entity.TryGetEntityComponent(out GameObjectComponent gameObjectComponent))
                 {
-                    continue;
+                    GameObject.Destroy(gameObjectComponent.GetGameObject());
                 }
             }
 
-            _itemsEnumerator.Reset();
+            _itemsCleanupData.ItemEntitesToCleanup.Clear();
             return true;
         }
     }

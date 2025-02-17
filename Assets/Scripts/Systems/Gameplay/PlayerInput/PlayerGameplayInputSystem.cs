@@ -103,6 +103,11 @@ namespace MergeCase.Systems.Gameplay
                 return;
             }
 
+            if (!itemEntity.IsQueryable)
+            {
+                return;
+            }
+
             _originalIndex = gridIndex;
 
             if (itemEntity.TryGetEntityComponent(out GameObjectComponent gameObjectComponent))
