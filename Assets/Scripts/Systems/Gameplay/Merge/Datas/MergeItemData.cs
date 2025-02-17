@@ -10,6 +10,7 @@ namespace MergeCase.General.Config.Gameplay
     {
         public ItemType MergeType;
         public int RequiredAmount;
+        public ItemType MergedToType;
         public GameObject MergedToPrefab;
     }
 }

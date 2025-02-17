@@ -72,7 +72,7 @@ namespace MergeCase.Systems.Command.Gameplay
                 {
                     var transform = gameObjectComponent.GetGameObject().transform;
 
-                    sequence.Join(transform.DOMove(MergePosition, 0.5f));
+                    sequence.Join(transform.DOMove(MergePosition, 0.5f).SetEase(Ease.InBack));
                 }
             }
 

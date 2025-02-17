@@ -81,6 +81,23 @@ namespace MergeCase.Systems.Command
             return commands != null && commands.Count > 0;
         }
 
+        public bool TryGetAllNoAlloc<T>(ICollection<T> commands) where T : ICommand
+        {
+            commands.Clear();
+
+            foreach (var command in _commands)
+            {
+                if (command is not T commanType)
+                {
+                    continue;
+                }
+
+                commands.Add((T)command);
+            }
+
+            return commands.Count > 0;
+        }
+
         public bool TryUpdate()
         {
             foreach (var command in _commands)

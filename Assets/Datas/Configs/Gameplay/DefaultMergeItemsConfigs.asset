@@ -15,7 +15,9 @@ MonoBehaviour:
   <MergeItemDatas>k__BackingField:
   - MergeType: 0
     RequiredAmount: 3
+    MergedToType: 1
     MergedToPrefab: {fileID: 3178144767178789519, guid: 1adf35d825f77a34fa21ed4311f4ced8, type: 3}
   - MergeType: 1
     RequiredAmount: 3
+    MergedToType: 2
     MergedToPrefab: {fileID: 3178144767178789519, guid: 9d0c7b88cb01c7140a07c31a118fef0e, type: 3}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MergeCase.General.Config;
 using MergeCase.Systems.Command;
 using MergeCase.Systems.Gameplay;
+using MergeCase.Systems.Quest;
 using UnityEngine;
 
 public class GameplayLoader : MonoBehaviour
@@ -37,6 +38,7 @@ public class GameplayLoader : MonoBehaviour
         systemUpdater.TryAddGameSystemImmediately(new MergeItemsSystem(), autoInitialize: false);
         systemUpdater.TryAddGameSystemImmediately(new PlayerGameplayInputSystem(), autoInitialize: false);
 
+        systemUpdater.TryAddGameSystemImmediately(new QuestsSystem(), autoInitialize: false);
         systemUpdater.TryAddGameSystemImmediately(new CommandSystem(), autoInitialize: false);
         systemUpdater.TryAddGameSystemImmediately(new ItemsCleanupSystem(), autoInitialize: false);
 

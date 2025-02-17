@@ -1,0 +1,113 @@
+using System.Collections.Generic;
+using MergeCase.Entities;
+using MergeCase.General.Config;
+using MergeCase.General.Interfaces;
+using MergeCase.Systems.Command.Gameplay;
+using MergeCase.Systems.Command.Interfaces;
+using MergeCase.Systems.Gameplay;
+using MergeCase.Systems.Quest.Config;
+using MergeCase.Systems.Quest.Data;
+using MergeCase.Systems.Updater;
+
+namespace MergeCase.Systems.Quest
+{
+    public class QuestsSystem : GameplaySystemBase, IInitializable<SystemUpdateContext<GameplaySystemBase>>, IUpdateable<SystemUpdateContext<GameplaySystemBase>>
+    {
+        ICommandCollection _commandCollection;
+        QuestConfigs _questConfigs;
+        List<QuestData> _questDatas = new();
+        List<MergeItemsCommand> _currentlyRunningMergeCommands = new();
+
+        public bool TryInitialize(SystemUpdateContext<GameplaySystemBase> data)
+        {
+            if (!data.SystemUpdater.TryGetGameSystemByType(out _commandCollection))
+            {
+                UnityLogger.LogErrorWithTag($"{GetType()} could not find {typeof(ICommandCollection)}! Cannot initialize!");
+                return false;
+            }
+
+            if (!data.DataCollection.TryGet(out ConfigProvider configProvider))
+            {
+                UnityLogger.LogErrorWithTag($"{GetType()} could not find {typeof(ConfigProvider)}! Cannot initialize!");
+                return false;
+            }
+
+            if (!configProvider.TryGet(out _questConfigs))
+            {
+                UnityLogger.LogErrorWithTag($"{GetType()} could not find {typeof(QuestConfigs)} as config! Cannot initialize!");
+                return false;
+            }
+
+            foreach (var questData in _questConfigs.QuestDatas)
+            {
+                _questDatas.Add(questData.GetCopy());
+            }
+
+            return true;
+        }
+
+        public bool TryDeInitialize(SystemUpdateContext<GameplaySystemBase> data)
+        {
+            _questDatas.Clear();
+            return true;
+        }
+
+        public bool TryUpdate(SystemUpdateContext<GameplaySystemBase> data)
+        {
+            CheckRunningMergeCommands();
+            return true;
+        }
+
+
+        void CheckRunningMergeCommands()
+        {
+            _currentlyRunningMergeCommands.Clear();
+
+            if (!_commandCollection.TryGetAllNoAlloc(_currentlyRunningMergeCommands))
+            {
+                return;
+            }
+
+            foreach (var mergeCommand in _currentlyRunningMergeCommands)
+            {
+                if (!mergeCommand.IsCompleted())
+                {
+                    continue;
+                }
+
+                var mergeSpawnType = mergeCommand.MergeItemData.MergedToType;
+
+                foreach (var questData in _questDatas)
+                {
+                    if (questData.CollectAmount <= 0)
+                    {
+                        continue;
+                    }
+
+                    if (mergeSpawnType != questData.QuestType)
+                    {
+                        continue;
+                    }
+
+                    questData.CollectAmount--;
+                    UnityLogger.LogWithTag($"Quest is collected! Collected type : {questData.QuestType}. Remaining Count : {questData.CollectAmount}");
+                    //Create Quest UI Move command here!
+                }
+            }
+        }
+
+        void CheckAreAllQuestComplete()
+        {
+            foreach (var questData in _questDatas)
+            {
+                if (questData.CollectAmount > 0)
+                {
+                    return;
+                }
+            }
+
+            //All quests are done, we can finish gameplay!
+        }
+    }
+}
+

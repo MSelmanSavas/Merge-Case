@@ -8,5 +8,6 @@ namespace MergeCase.Systems.Command.Interfaces
     {
         public bool TryGet<T>(out T command) where T : ICommand;
         public bool TryGetAll<T>(out ICollection<T> commands) where T : ICommand;
+        public bool TryGetAllNoAlloc<T>(ICollection<T> commands) where T : ICommand;
     }
 }
