@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5c925c870e80c7489f553bb517ef4c3, type: 3}
+  m_Name: DefaulQuestsDisplayConfigs
+  m_EditorClassIdentifier: 
+  ScaleTarget: 0.5
+  ScaleDuration: 1
+  AfterScaleWaitDuration: 0.25
+  MoveDuration: 0.75
+  CollectParticlePrefab: {fileID: 6669049336735642493, guid: c7fb0cab1e1bc7248a7485be188c34b9, type: 3}

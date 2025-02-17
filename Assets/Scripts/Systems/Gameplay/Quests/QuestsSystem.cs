@@ -96,7 +96,7 @@ namespace MergeCase.Systems.Quest
                     //Create Quest UI Move command here!
                     _commandCollection.TryAdd(new UpdateQuestUIDisplayCommand(
                         _configProvider,
-                        questData.QuestType,
+                        questData,
                         mergeCommand.MergePosition
                     ));
                 }
