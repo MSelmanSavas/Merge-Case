@@ -4,6 +4,7 @@ using MergeCase.General.Config;
 using MergeCase.General.Interfaces;
 using MergeCase.Systems.Command.Gameplay;
 using MergeCase.Systems.Command.Interfaces;
+using MergeCase.Systems.Command.UI;
 using MergeCase.Systems.Gameplay;
 using MergeCase.Systems.Quest.Config;
 using MergeCase.Systems.Quest.Data;
@@ -14,6 +15,7 @@ namespace MergeCase.Systems.Quest
     public class QuestsSystem : GameplaySystemBase, IInitializable<SystemUpdateContext<GameplaySystemBase>>, IUpdateable<SystemUpdateContext<GameplaySystemBase>>
     {
         ICommandCollection _commandCollection;
+        ConfigProvider _configProvider;
         QuestConfigs _questConfigs;
         List<QuestData> _questDatas = new();
         List<MergeItemsCommand> _currentlyRunningMergeCommands = new();
@@ -26,13 +28,13 @@ namespace MergeCase.Systems.Quest
                 return false;
             }
 
-            if (!data.DataCollection.TryGet(out ConfigProvider configProvider))
+            if (!data.DataCollection.TryGet(out _configProvider))
             {
                 UnityLogger.LogErrorWithTag($"{GetType()} could not find {typeof(ConfigProvider)}! Cannot initialize!");
                 return false;
             }
 
-            if (!configProvider.TryGet(out _questConfigs))
+            if (!_configProvider.TryGet(out _questConfigs))
             {
                 UnityLogger.LogErrorWithTag($"{GetType()} could not find {typeof(QuestConfigs)} as config! Cannot initialize!");
                 return false;
@@ -92,6 +94,11 @@ namespace MergeCase.Systems.Quest
                     questData.CollectAmount--;
                     UnityLogger.LogWithTag($"Quest is collected! Collected type : {questData.QuestType}. Remaining Count : {questData.CollectAmount}");
                     //Create Quest UI Move command here!
+                    _commandCollection.TryAdd(new UpdateQuestUIDisplayCommand(
+                        _configProvider,
+                        questData.QuestType,
+                        mergeCommand.MergePosition
+                    ));
                 }
             }
         }

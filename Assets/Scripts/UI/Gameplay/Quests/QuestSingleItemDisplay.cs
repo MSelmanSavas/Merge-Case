@@ -24,5 +24,11 @@ namespace MergeCase.UI.Gameplay
         {
             return QuestVisual.transform.position;
         }
+
+        public void UpdateQuest(int collectedCount)
+        {
+            QuestData.CollectAmount -= collectedCount;
+            RemainingCountText.text = QuestData.CollectAmount.ToString();
+        }
     }
 }
