@@ -18,6 +18,8 @@ public class GameplayLoader : MonoBehaviour
 
     private void InitializeGameUpdater()
     {
+        Application.targetFrameRate = 60;
+
         GameObject gameUpdater = new GameObject
         {
             name = "GameUpdater",
