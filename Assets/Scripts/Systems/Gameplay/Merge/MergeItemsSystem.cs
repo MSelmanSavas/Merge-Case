@@ -92,7 +92,6 @@ namespace MergeCase.Systems.Gameplay
             {
                 for (int x = 0; x < gridSize.x; x++)
                 {
-                    List<IEntity> _similarEntities = ListPool<IEntity>.Get();
                     Vector2Int gridIndex = new Vector2Int(x, y);
                     int gridCheckIndex = x + (y * gridSize.y);
 
@@ -116,10 +115,12 @@ namespace MergeCase.Systems.Gameplay
                         continue;
                     }
 
+                    List<IEntity> _similarEntities = ListPool<IEntity>.Get();
                     FloodFillSearchSimilarItems(gridIndex, itemTypeComponent, gridSize, _similarEntities);
 
                     if (!_mergeItemsConfigs.TryGetMergeItemData(itemTypeComponent.Type, _similarEntities.Count, out MergeItemData mergeItemData))
                     {
+                        ListPool<IEntity>.Release(_similarEntities);
                         continue;
                     }
 
