@@ -30,6 +30,7 @@ namespace MergeCase.Systems.Gameplay
 
         public bool TryUpdate()
         {
+            //We can add pooling here later!
             foreach (var entity in _itemsCleanupData.ItemEntitesToCleanup)
             {
                 if (entity.TryGetEntityComponent(out GameObjectComponent gameObjectComponent))
