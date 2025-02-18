@@ -83,9 +83,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3554714777489171480}
     m_Modifications:
+    - target: {fileID: 1069996388688760868, guid: fe3ce3fd20fdf5445afa56e44acb10b0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069996388688760868, guid: fe3ce3fd20fdf5445afa56e44acb10b0, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069996388688760868, guid: fe3ce3fd20fdf5445afa56e44acb10b0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069996388688760868, guid: fe3ce3fd20fdf5445afa56e44acb10b0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1178954672205184483, guid: fe3ce3fd20fdf5445afa56e44acb10b0, type: 3}
       propertyPath: m_Name
       value: QuestUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 2122936745090254959, guid: fe3ce3fd20fdf5445afa56e44acb10b0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2122936745090254959, guid: fe3ce3fd20fdf5445afa56e44acb10b0, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2122936745090254959, guid: fe3ce3fd20fdf5445afa56e44acb10b0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2122936745090254959, guid: fe3ce3fd20fdf5445afa56e44acb10b0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3460382938048291023, guid: fe3ce3fd20fdf5445afa56e44acb10b0, type: 3}
       propertyPath: m_AnchorMax.y
