@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <QuestDatas>k__BackingField:
   - QuestType: 1
-    CollectAmount: 15
+    CollectAmount: 7
     QuestSprite: {fileID: 21300000, guid: d1371205877538447ad2ea473179746d, type: 3}
   - QuestType: 2
     CollectAmount: 5

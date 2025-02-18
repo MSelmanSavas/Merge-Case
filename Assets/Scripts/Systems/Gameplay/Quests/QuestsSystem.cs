@@ -60,6 +60,10 @@ namespace MergeCase.Systems.Quest
 
             if (CheckAreAllQuestComplete())
             {
+                _commandCollection.TryAdd(new OpenGameFinishedPopupCommand(
+                    _commandCollection
+                ));
+
                 data.GameState.State = GameStateData.GameState.Finished;
                 UnityLogger.LogWithTag("Game is finished, all quests are completed!");
             }

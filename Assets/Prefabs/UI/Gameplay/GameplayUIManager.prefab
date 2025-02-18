@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3554714777489171480}
   - component: {fileID: 3228543270675890203}
   - component: {fileID: 7131603009132224614}
+  - component: {fileID: 6304031732882077831}
   m_Layer: 0
   m_Name: GameplayUIManager
   m_TagString: Untagged
@@ -77,6 +78,23 @@ Canvas:
   m_SortingLayerID: 570232255
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &6304031732882077831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3345933610275066719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 55
 --- !u!1001 &8146374258429521903
 PrefabInstance:
   m_ObjectHideFlags: 0

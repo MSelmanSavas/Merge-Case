@@ -68,6 +68,12 @@ namespace MergeCase.Systems.Gameplay
         {
             if (data.GameState.State is not GameStateData.GameState.Playing)
             {
+                if (_selectedEntity != null)
+                {
+                    ReturnItemToOriginalIndex();
+                    ResetInternalValues();
+                }
+
                 return true;
             }
 
