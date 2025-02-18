@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MergeCase.UI.Popup
 {
-    public abstract class PopupBase : MonoBehaviour
+    public abstract class BasePopup : MonoBehaviour
     {
         public abstract PopupType Type { get; }
         void OnEnable()

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace MergeCase.UI.Popup
 {
-    public class GameFinishedPopup : PopupBase
+    public class GameFinishedPopup : BasePopup
     {
         public override PopupType Type => PopupType.GameFinished;
 

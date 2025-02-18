@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MergeCase.General.Config;
+using MergeCase.UI.Popup;
 using UnityEngine;
 
 namespace MergeCase.UI.Gameplay
@@ -12,6 +13,9 @@ namespace MergeCase.UI.Gameplay
 
         [field: SerializeField]
         public QuestUIDisplay QuestUIDisplay { get; private set; }
+
+        [field: SerializeField]
+        public GameFinishedPopup GameFinishedPopup { get; private set; }
 
         void Awake()
         {
