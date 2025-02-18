@@ -1,28 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using MergeCase.General.Interfaces;
-using MergeCase.Systems.Updater;
-using UnityEngine;
+using MergeCase.Systems.Gameplay;
 
 namespace MergeCase.Systems.Updater
 {
-    public class SystemUpdateContext<T> where T : SystemBase
-    {
+	public class SystemUpdateContext<T> where T : SystemBase
+	{
 #if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.ShowInInspector]
+		[Sirenix.OdinInspector.ShowInInspector]
 #endif
-        public IDataCollection DataCollection { get; private set; }
+		public IDataCollection DataCollection { get; private set; }
 
 #if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.ShowInInspector]
+		[Sirenix.OdinInspector.ShowInInspector]
 #endif
-        public SystemUpdater<T> SystemUpdater { get; private set; }
+		public SystemUpdater<T> SystemUpdater { get; private set; }
 
-        public SystemUpdateContext(IDataCollection dataCollection, SystemUpdater<T> systemUpdater)
-        {
-            DataCollection = dataCollection;
-            SystemUpdater = systemUpdater;
-        }
-    }
+#if ODIN_INSPECTOR
+		[Sirenix.OdinInspector.ShowInInspector]
+#endif
+		public GameStateData GameState { get; private set; }
+
+		public SystemUpdateContext(IDataCollection dataCollection, SystemUpdater<T> systemUpdater, GameStateData gameStateData)
+		{
+			DataCollection = dataCollection;
+			SystemUpdater = systemUpdater;
+			GameState = gameStateData;
+		}
+	}
 }
-

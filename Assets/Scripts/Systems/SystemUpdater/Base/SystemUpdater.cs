@@ -37,7 +37,7 @@ namespace MergeCase.Systems.Updater
 
         public SystemUpdater()
         {
-            UpdateContext = new(new SystemUpdateContextDataCollection(), this);
+            UpdateContext = new(new SystemUpdateContextDataCollection(), this, new Gameplay.GameStateData());
         }
 
         public bool TryInitialize()

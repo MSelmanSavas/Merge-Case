@@ -30,6 +30,7 @@ public class GameplayLoader : MonoBehaviour
 
         systemUpdater.UpdateContext.DataCollection.TryAdd(_configProvider);
         systemUpdater.UpdateContext.DataCollection.TryAdd(new ItemsCleanupData());
+        systemUpdater.UpdateContext.GameState.State = GameStateData.GameState.Loading;
 
         systemUpdater.TryAddGameSystemImmediately(new GameplayGridsSystem(), autoInitialize: false);
         systemUpdater.TryAddGameSystemImmediately(new GameplayItemsSystem(), autoInitialize: false);
@@ -45,5 +46,7 @@ public class GameplayLoader : MonoBehaviour
         systemUpdater.TryAddGameSystemImmediately(new ItemsCleanupSystem(), autoInitialize: false);
 
         systemUpdater.TryInitialize();
+
+        systemUpdater.UpdateContext.GameState.State = GameStateData.GameState.Playing;
     }
 }

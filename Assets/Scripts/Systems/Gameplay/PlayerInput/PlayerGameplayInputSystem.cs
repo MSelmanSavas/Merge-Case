@@ -66,6 +66,11 @@ namespace MergeCase.Systems.Gameplay
 
         public bool TryUpdate(SystemUpdateContext<GameplaySystemBase> data)
         {
+            if (data.GameState.State is not GameStateData.GameState.Playing)
+            {
+                return true;
+            }
+
             InputToSelectItem();
             MoveItemIfSelected();
             DropItemOnPosition();

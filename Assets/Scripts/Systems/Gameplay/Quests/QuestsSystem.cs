@@ -57,6 +57,13 @@ namespace MergeCase.Systems.Quest
         public bool TryUpdate(SystemUpdateContext<GameplaySystemBase> data)
         {
             CheckRunningMergeCommands();
+
+            if (CheckAreAllQuestComplete())
+            {
+                data.GameState.State = GameStateData.GameState.Finished;
+                UnityLogger.LogWithTag("Game is finished, all quests are completed!");
+            }
+
             return true;
         }
 
@@ -103,17 +110,17 @@ namespace MergeCase.Systems.Quest
             }
         }
 
-        void CheckAreAllQuestComplete()
+        bool CheckAreAllQuestComplete()
         {
             foreach (var questData in _questDatas)
             {
                 if (questData.CollectAmount > 0)
                 {
-                    return;
+                    return false;
                 }
             }
 
-            //All quests are done, we can finish gameplay!
+            return true;
         }
     }
 }
