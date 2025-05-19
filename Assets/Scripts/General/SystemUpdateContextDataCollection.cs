@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MergeCase.Systems.Updater
 {
-    public class SystemUpdateContextDataCollection : IDataCollection
+    public sealed class SystemUpdateContextDataCollection : IDataCollection
     {
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.ShowInInspector]
